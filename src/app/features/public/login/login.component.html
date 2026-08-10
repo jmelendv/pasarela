@@ -1,0 +1,46 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2>Iniciar Sesión</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="correo@ejemplo.com"
+          class="form-control"
+        />
+        <small *ngIf="isFieldInvalid('email')" class="error">
+          Email requerido y debe ser válido
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña:</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Tu contraseña"
+          class="form-control"
+        />
+        <small *ngIf="isFieldInvalid('password')" class="error">
+          Contraseña requerida (mín. 6 caracteres)
+        </small>
+      </div>
+
+      <button type="submit" [disabled]="!loginForm.valid || isLoading" class="btn-login">
+        {{ isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión' }}
+      </button>
+    </form>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
+    <div class="demo-hint">
+      <p><strong>Demo:</strong> Usa cualquier email y contraseña para pruebas</p>
+    </div>
+  </div>
+</div>
