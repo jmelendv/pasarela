@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "http://catchtoapp.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
