@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, RouterLink, Router } from '@angular/router';
-import { AuthService } from '../../core/auth/auth.service';
+import { AuthService, AuthUser } from '../../core/auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 
@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
           <nav class="nav-menu">
             <a routerLink="/app/dashboard" routerLinkActive="active">Dashboard</a>
             <a routerLink="/app/profile" routerLinkActive="active">Perfil</a>
-            <span class="user-info">{{ (currentUser$ | async)?.name }}</span>
+            <span class="user-info">{{ (currentUser$ | async)?.username }}</span>
             <button (click)="logout()" class="logout-btn">Cerrar sesión</button>
           </nav>
         </div>
@@ -110,7 +110,7 @@ import { Observable } from 'rxjs';
   `]
 })
 export class PrivateLayoutComponent implements OnInit {
-  currentUser$: Observable<any>;
+  currentUser$: Observable<AuthUser | null>;
 
   constructor(private authService: AuthService, private router: Router) {
     this.currentUser$ = this.authService.currentUser$;

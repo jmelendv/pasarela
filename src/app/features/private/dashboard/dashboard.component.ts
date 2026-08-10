@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../../core/auth/auth.service';
+import { AuthService, AuthUser } from '../../../core/auth/auth.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
   template: `
     <div class="dashboard-container">
       <h1>Dashboard</h1>
-      <p>Bienvenido, {{ (currentUser$ | async)?.name }}!</p>
+      <p>Bienvenido, {{ (currentUser$ | async)?.username }}!</p>
 
       <div class="cards-grid">
         <div class="card">
@@ -89,7 +89,7 @@ import { Observable } from 'rxjs';
   `]
 })
 export class DashboardComponent implements OnInit {
-  currentUser$: Observable<any>;
+  currentUser$: Observable<AuthUser | null>;
 
   constructor(private authService: AuthService) {
     this.currentUser$ = this.authService.currentUser$;

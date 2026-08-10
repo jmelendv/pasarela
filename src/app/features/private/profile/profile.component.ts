@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../../core/auth/auth.service';
+import { AuthService, AuthUser } from '../../../core/auth/auth.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -14,32 +14,20 @@ import { Observable } from 'rxjs';
 
       <div *ngIf="currentUser$ | async as user" class="profile-card">
         <div class="profile-header">
-          <div class="avatar">{{ user.name?.charAt(0).toUpperCase() }}</div>
+          <div class="avatar">{{ user.username?.charAt(0).toUpperCase() }}</div>
           <div class="user-info">
-            <h2>{{ user.name }}</h2>
-            <p>{{ user.email }}</p>
+            <h2>{{ user.username }}</h2>
           </div>
         </div>
 
         <form [formGroup]="profileForm" (ngSubmit)="onUpdateProfile()" class="profile-form">
           <div class="form-group">
-            <label for="name">Nombre:</label>
+            <label for="username">Usuario:</label>
             <input
-              id="name"
+              id="username"
               type="text"
-              formControlName="name"
+              formControlName="username"
               class="form-control"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="email">Email:</label>
-            <input
-              id="email"
-              type="email"
-              formControlName="email"
-              class="form-control"
-              [disabled]="true"
             />
           </div>
 
@@ -158,7 +146,7 @@ import { Observable } from 'rxjs';
 })
 export class ProfileComponent implements OnInit {
   profileForm!: FormGroup;
-  currentUser$: Observable<any>;
+  currentUser$: Observable<AuthUser | null>;
 
   constructor(
     private fb: FormBuilder,
@@ -174,8 +162,7 @@ export class ProfileComponent implements OnInit {
   initializeForm(): void {
     const user = this.authService.getCurrentUser();
     this.profileForm = this.fb.group({
-      name: [user?.name || '', Validators.required],
-      email: [user?.email || '', [Validators.required, Validators.email]]
+      username: [user?.username || '', Validators.required]
     });
   }
 

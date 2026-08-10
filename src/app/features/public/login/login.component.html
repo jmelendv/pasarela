@@ -1,18 +1,29 @@
 <div class="login-container">
+  <div
+    *ngIf="errorMessage"
+    class="login-popup"
+    [class.popup-error]="popupType === 'error'"
+    [class.popup-warning]="popupType === 'warning'"
+    [class.popup-success]="popupType === 'success'"
+    role="alert"
+    aria-live="assertive"
+  >
+    {{ errorMessage }}
+  </div>
   <div class="login-card">
     <h2>Iniciar Sesión</h2>
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
       <div class="form-group">
-        <label for="email">Email:</label>
+        <label for="username">Usuario:</label>
         <input
-          id="email"
-          type="email"
-          formControlName="email"
-          placeholder="correo@ejemplo.com"
+          id="username"
+          type="text"
+          formControlName="username"
+          placeholder="Tu usuario"
           class="form-control"
         />
-        <small *ngIf="isFieldInvalid('email')" class="error">
-          Email requerido y debe ser válido
+        <small *ngIf="isFieldInvalid('username')" class="error">
+          Usuario requerido
         </small>
       </div>
 
@@ -35,12 +46,8 @@
       </button>
     </form>
 
-    <div *ngIf="errorMessage" class="alert alert-danger">
-      {{ errorMessage }}
-    </div>
-
     <div class="demo-hint">
-      <p><strong>Demo:</strong> Usa cualquier email y contraseña para pruebas</p>
+      <p><strong>Acceso:</strong> Ingresa tu usuario y contraseña para autenticarte.</p>
     </div>
   </div>
 </div>
